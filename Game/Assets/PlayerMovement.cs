@@ -9,6 +9,14 @@ public class NewBehaviourScript : MonoBehaviour
     
     public float groundDrag;
 
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool readyToJump = true; // Initialize readyToJump to true
+
+    [Header("Keybind")]
+    public KeyCode jumpKey = KeyCode.Space; // Corrected typo in KeyCode
+
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
@@ -49,20 +57,46 @@ public class NewBehaviourScript : MonoBehaviour
     private void MyInput(){
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        //when to jump
+        if(Input.GetKeyDown(jumpKey) && readyToJump && grounded){ // Check for KeyDown instead of GetKey
+            readyToJump = false;
+
+            Jump();
+
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
     }
 
     private void MovePlayer(){
+        //calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        
+        //on ground
+        if(grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        //in air
+        else if(!grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
     private void SpeedControl(){
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         if(flatVel.magnitude > moveSpeed){
-            Vector3 limitdVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitdVel.x, rb.velocity.y, limitdVel.z);
+            Vector3 limitedVel = flatVel.normalized * moveSpeed; // Corrected typo in variable name
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
+
+    private void Jump(){
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    private void ResetJump(){ // Corrected capitalization of the method name
+        readyToJump = true;
     }
 }
