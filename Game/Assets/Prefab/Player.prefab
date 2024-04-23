@@ -119,8 +119,9 @@ GameObject:
   - component: {fileID: 6920315446653383013}
   - component: {fileID: 4518287855917043312}
   - component: {fileID: 1977817913210250171}
+  - component: {fileID: 6888842154056748959}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: GunObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,13 +135,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537032360570250730}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.6974424, y: -0, z: -0, w: 0.71664095}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.477, y: -0.192, z: 0.568}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 730917861161599599}
-  m_LocalEulerAnglesHint: {x: -88.445, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &6920315446653383013
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -214,6 +215,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6888842154056748959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537032360570250730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d393a0ed9bf4246b1f0241b4e87e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 100
+  gunTip: {fileID: 1963771872393062941}
+  lineRenderer: {fileID: 0}
+  lineColor: {r: 1, g: 0.91422194, b: 0.003144443, a: 1}
 --- !u!1 &2657283388759309307
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +309,37 @@ MonoBehaviour:
   speed: 16
   gravity: -20
   jumpHeight: 2
+--- !u!1 &7604008262391701095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1963771872393062941}
+  m_Layer: 0
+  m_Name: GunTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1963771872393062941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604008262391701095}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.49}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 730917861161599599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7865973052089286952
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +374,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2158092562177147911}
+  - {fileID: 1963771872393062941}
   m_Father: {fileID: 5181000919280933445}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3704426075447807527
