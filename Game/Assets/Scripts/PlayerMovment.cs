@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         Slide();
         ActuallySlide();
         Gravity();
-        cameraBob.DoBob(IsPlayerMoving());
+        cameraBob.DoBob(IsPlayerMoving(), isSliding);
     }
 
     void CheckGrounded()

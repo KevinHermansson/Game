@@ -12,9 +12,9 @@ public class CameraBob : MonoBehaviour
         originalY = transform.localPosition.y;
     }
 
-    public void DoBob(bool isMoving)
+     public void DoBob(bool isMoving, bool isSliding)
     {
-        if (isMoving)
+        if (isMoving && !isSliding)
         {
             timer += Time.deltaTime * bobSpeed;
 
