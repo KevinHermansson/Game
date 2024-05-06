@@ -6,6 +6,7 @@ public class CameraLook : MonoBehaviour
     public float mouseSensitivity = 100f;
     public Transform playerBody;
     public float smoothTime = 0.1f;
+    public PlayerMovement playerMovement;
 
     float xRotation = 0f;
     float currentMouseX = 0f;
@@ -16,20 +17,31 @@ public class CameraLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        if (playerMovement == null)
+        {
+            playerMovement = playerBody.GetComponent<PlayerMovement>();
+            if (playerMovement == null)
+            {
+                Debug.LogError("PlayerMovement component not found on player body.");
+            }
+        }
     }
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+        if (playerMovement != null && !playerMovement.isSliding)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
-        currentMouseX = Mathf.SmoothDamp(currentMouseX, mouseX, ref mouseXVelocity, smoothTime);
-        currentMouseY = Mathf.SmoothDamp(currentMouseY, mouseY, ref mouseYVelocity, smoothTime);
+            currentMouseX = Mathf.SmoothDamp(currentMouseX, mouseX, ref mouseXVelocity, smoothTime);
+            currentMouseY = Mathf.SmoothDamp(currentMouseY, mouseY, ref mouseYVelocity, smoothTime);
 
-        xRotation -= currentMouseY * Time.deltaTime;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= currentMouseY * Time.deltaTime;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * currentMouseX * Time.deltaTime);
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * currentMouseX * Time.deltaTime);
+        }
     }
 }
